@@ -1,16 +1,15 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue'
+import { findNewAPI } from '@/apis/home';
 import HomePanel from './HomePanel.vue';
-import { findNewAPI } from '@/apis/home'
 
-// 获取数据
 const newList = ref([])
-const getNewList = async () => {
+const findNew = async () => {
     const res = await findNewAPI()
     newList.value = res.result
 }
 onMounted(() => {
-    getNewList()
+    findNew()
 })
 </script>
 
@@ -26,7 +25,6 @@ onMounted(() => {
             </li>
         </ul>
     </HomePanel>
-    <div></div>
     <!-- 下面是插槽主体内容模版
   <ul class="goods-list">
     <li v-for="item in newList" :key="item.id">
