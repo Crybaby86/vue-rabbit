@@ -18,6 +18,7 @@ onMounted(() => {
   <LayoutFixed />
   <LayoutNav />
   <LayoutHeader />
+  <!-- 添加key 不再复用 -->
   <RouterView />
   <LayoutFooter />
 </template>

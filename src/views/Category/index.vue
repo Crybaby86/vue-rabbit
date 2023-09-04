@@ -3,7 +3,7 @@ import { getCategoryAPI } from "@/apis/category";
 import { getBannerAPI } from "@/apis/home";
 import GoodsItem from "../Home/components/GoodsItem.vue";
 import { onMounted, onUpdated, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
 const categoryData = ref({});
 const route = useRoute();
 const getCategory = async (id) => {
@@ -20,17 +20,20 @@ const getBanner = async () => {
 };
 onMounted(() => {
   getCategory(route.params.id);
-  console.log(categoryData.value);
   getBanner();
 });
-watch(
-  () => route.params.id,
-  (newVal) => {
-    getCategory(newVal);
-    console.log(categoryData.value, newVal);
-    getBanner();
-  }
-);
+// 监听route.params.id是否变化
+// watch(
+//   () => route.params.id,
+//   (newVal) => {
+//     getCategory(newVal);
+//   }
+// );
+// 目标路由参数变化时，接口重新发送
+onBeforeRouteUpdate((to) => {
+  // to 目标路由对象
+  getCategory(to.params.id);
+});
 </script>
 
 <template>
